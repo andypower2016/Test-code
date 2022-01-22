@@ -1,26 +1,15 @@
-CC      := gcc
-CXX     := g++
-CFLAGS  := -O3 -Wall -pthread 
+CC = gcc
+CFLAGS := -m64 
+x86_32 = no
 
-SRC 	:= ./
-SRCS    := $(shell find $(SRC) -name '*.c')
+ifeq ($(x86_32),yes)
+	CFLAGS := -m32
+endif
 
-OBJS    := $(SRCS:%.c=%.o)
+PHONY:all
+all:
+	$(CC) $(CFLAGS) -c main.c -o main.o
+	$(CC) main.o -o main
 
-BIN 	:= ./
-LDFLAGS := 
-LDLIBS	:= -lm
-MKDIR   := mkdir
-RMDIR   := rmdir
-
-.PHONY: all
-all:$(OBJS) | $(BIN)
-	$(CC) -o $(BIN)/main $^ $(CFLAGS) $(LDFLAGS) $(LDLIBS)
-	@echo make target [$@] is complete
-
-.PHONY: clean
 clean:
-	-rm -f $(BIN)/main $(OBJS)
-
-
-
+	rm *.exe *.o
