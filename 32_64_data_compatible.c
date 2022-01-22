@@ -2,6 +2,7 @@
 #include <stddef.h>
 
 typedef void (*ptr)(void);
+typedef size_t/*int*/ address_type 
 
 int main()
 {
@@ -14,11 +15,11 @@ int main()
 
 	int data = 64;
 	void *pdata = (void*)& data;
-	size_t address = (size_t) pdata;
+	address_type address = (address_type) pdata;
 	printf("address of data=%p\n", &data);
 	printf("address pointed by pdata=%p\n", pdata);
 	printf("address = %p\n",address);
-	printf("data = %d\n",*(int*)(void*)address);
+	printf("data = %d\n",*(address_type*)(void*)address);
 
 	return 0;
 }
