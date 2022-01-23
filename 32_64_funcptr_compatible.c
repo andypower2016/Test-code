@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stddef.h>
-
+/* a function pointer type */
 typedef void (*pfunc)(void);
+
+/* address storage type */
 typedef size_t /*int*/ addr_type;
 
 void print_func(void)
@@ -24,7 +26,7 @@ int main()
 	printf("address pointed by func_ptr=%p\n", func_ptr);
 	printf("address = %p\n",address);
 
-	/* will ocuur seg fault if addr_type is int (both 4byte in 32/64 bit compiler) */
+	/* will occur seg fault if addr_type is int (both 4byte in 32/64 bit compiler) */
 	((pfunc)address)();
 
 	return 0;
