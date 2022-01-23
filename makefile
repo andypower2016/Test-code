@@ -1,23 +1,28 @@
 CC = gcc
-CFLAGS := -m64 
+CFLAGS := -O3 -Wall
 
-INC = -I"C:\Users\User\Desktop\ctest02"
-LIBPATH = -L"C:\Users\User\Desktop\ctest02"
-LIBS := -lmod1 -lmod2
+LIBPATH = -L"./lib"
+LIBS := -lmod
 
 PHONY:all
-all:
-	$(CC) $(INC) main.c $(LIBPATH) $(LIBS) -o main 
+all:mod
+#	$(CC) $(CFLAGS) main.c ./lib/libmod.so -o main
+	$(CC) $(CFLAGS) main.c $(LIBPATH) $(LIBS) -o main 
 
 PHONY:mod1
 mod1:
-	$(CC) -fPIC -c mod1.c -o mod1.o
-	$(CC) -shared mod1.o -o libmod1.so
+	$(CC) $(CFLAGS) -fPIC -c mod1.c -o mod1.o
+	$(CC) $(CFLAGS) -shared mod1.o -o libmod1.so
 
 PHONY:mod2
 mod2:
-	$(CC) -fPIC -c mod2.c -o mod2.o
-	$(CC) -shared mod2.o -o libmod2.so
+	$(CC) $(CFLAGS) -fPIC -c mod2.c -o mod2.o
+	$(CC) $(CFLAGS) -shared mod2.o -o libmod2.so
+
+PHONY:mod
+mod:mod1 mod2
+	$(CC) $(CFLAGS) -shared mod1.o mod2.o -o ./lib/libmod.so
+#	ar rvs ./lib/libmod.o mod1.o mod2.o
 
 clean:
-	rm *.exe *.o *.so
+	rm *.o *.so main ./lib/*.so ./lib/*.o
